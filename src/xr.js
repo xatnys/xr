@@ -114,7 +114,11 @@ function xr(args) {
 
     for (const k in opts.headers) {
       if (!{}.hasOwnProperty.call(opts.headers, k)) continue;
-      xhr.setRequestHeader(k, opts.headers[k]);
+      let header = opts.headers[k];
+      if (typeof header === 'function') {
+        header = header();
+      }
+      xhr.setRequestHeader(k, header);
     }
 
     for (const k in opts.events) {

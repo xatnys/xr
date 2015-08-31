@@ -131,7 +131,11 @@
 
       for (var k in opts.headers) {
         if (!({}).hasOwnProperty.call(opts.headers, k)) continue;
-        xhr.setRequestHeader(k, opts.headers[k]);
+        var header = opts.headers[k];
+        if (typeof header === 'function') {
+          header = header();
+        }
+        xhr.setRequestHeader(k, header);
       }
 
       for (var k in opts.events) {
